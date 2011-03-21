@@ -1,8 +1,10 @@
-var twitter   = require('./twitter.js');
-var filters   = require('./filters.js');
-var processor = require('./processor.js')
-var database  = require('./database.js')
-var server    = require('./server.js')
+require.paths.unshift(__dirname + '/lib')
+
+var twitter   = require('twitter');
+var filters   = require('filters');
+var processor = require('processor')
+var database  = require('database')
+var server    = require('server')
 
 // Call only once
 twitter.start(filters.KEYWORDS, function(tweet){
