@@ -1,0 +1,10 @@
+script(src='/socket.io/socket.io.js')
+
+script
+  var socket = new io.Socket(); 
+  socket.connect();
+  socket.on('message', function(data){
+    console.log(data)
+  }) 
+
+h1 Hello world!
