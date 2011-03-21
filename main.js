@@ -1,22 +1,25 @@
 require.paths.unshift(__dirname + '/lib');
 
-var twitter   = require('twitter'),
-    filters   = require('filters'),
-    processor = require('processor'),
-    database  = require('database'),
-    server    = require('server')
+var twitter     = require('twitter'),
+    filters     = require('filters'),
+    processor   = require('processor'),
+    database    = require('database'),
+    server      = require('server')
+    calculation = require('calculation')
+    
+    config      = require('./config').Config
 
-// Call only once
+
+// Call start methods only once
+
 twitter.start(filters.KEYWORDS, function(tweet){
     var tally = processor.process(filters.MAP, tweet.text);
     database.persist(tweet, tally);
     server.broadcast(tally);
 });
 
-server.start();
+// Calculate and broadcast updates 
+// Wait +calculation_interval+ milliseconds between calculations
+calculation.start(server.broadcast, config.calculation_interval)
 
-setInterval(function(){
-    database.Tweet.getScores(function(result){
-        server.broadcast(result)
-    })
-}, 500)
+server.start();
