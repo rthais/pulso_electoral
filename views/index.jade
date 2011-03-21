@@ -1,10 +1,33 @@
+h1 Pulso Electoral
+
+  h2 Elecciones 2011
+  
+
+canvas#canvas(width='600', height='400')
+
 script(src='/socket.io/socket.io.js')
+script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
 
 script
-  var socket = new io.Socket(); 
-  socket.connect();
-  socket.on('message', function(data){
-    console.log(data)
-  }) 
+  $(function(){
+    var filters = !{JSON.stringify(keys)}
+    
+    var canvas = document.getElementById("canvas")
 
-h1 Hello world!
+    if (!canvas.getContext) return;
+    
+    var context = canvas.getContext('2d')    
+    
+    var socket = new io.Socket(); 
+
+    socket.connect();
+    socket.on('message', function(data){
+      context.fillStyle = "rgb(200,0,0)";
+      context.fillRect (Math.random() * 600, Math.random() * 400 , 55, 50);
+    })
+        
+    
+    
+    
+  })
+  
