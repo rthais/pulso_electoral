@@ -1,9 +1,9 @@
 h1 Pulso Electoral
-
-  h2 Elecciones 2011
+  span \ Elecciones 2011
   
 
-canvas#canvas(width='600', height='400')
+#canvas_container
+    canvas#canvas(width='1000', height='400')
 
 script(src='/socket.io/socket.io.js')
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
@@ -23,11 +23,6 @@ script
     socket.connect();
     socket.on('message', function(data){
       context.fillStyle = "rgb(200,0,0)";
-      context.fillRect (Math.random() * 600, Math.random() * 400 , 55, 50);
-    })
-        
-    
-    
-    
+      context.fillRect (Math.random() * 1000, Math.random() * 400 , 55, 50);
+    })        
   })
-  
