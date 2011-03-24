@@ -19,7 +19,7 @@ twitter.start(filters.KEYWORDS, function(tweet){
 });
 
 // Calculate and broadcast updates 
-// Wait +calculation_interval+ milliseconds between calculations
-calculation.start(server.broadcast, config.calculation_interval)
+// Wait +calculationInterval+ milliseconds between calculations
+calculation.start(server.broadcast, config.calculationInterval)
 
 server.start();

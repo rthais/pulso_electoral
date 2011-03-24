@@ -1,64 +1,42 @@
 h1 Pulso Electoral
   span \ Elecciones 2011
   
-// Use explorercanvas for IE
-canvas#canvas(width='1000', height='400')
+#chart
+  #labels
+  #field
 
 script(src='/socket.io/socket.io.js')
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
 
 script
-  $(function(){
-    var keys = !{JSON.stringify(keys)}
+  var socket = new io.Socket(); 
+  socket.connect();
+  
+  // $(function(){
+  // var keys = !{JSON.stringify(keys)}  
+  // 
+  // var fieldHeight = $("#field").height();
+  // var fieldWidth  = $("#field").width();
+  // 
+  // var barWidth     = fieldHeight / keys.length;
+  // 
+  // })
+  
+  socket.on('message', function(data){
+    var total = 0
+    var barOffset = 0 
+    var barHeight
     
-    var canvas = document.getElementById("canvas")
-    if (!canvas.getContext) return;    
-    var context = canvas.getContext('2d')    
+    for (key in data){
+        total += data[key].score
+    } 
     
-    var canvasHeight = $("#canvas").height();
-    var canvasWidth  = $("#canvas").width();
-    
-    var barWidth     = canvasHeight / keys.length;
-    
-    var xOffset      = 100.5;
-    
-    var fieldWidth   = canvasWidth - xOffset;
-    var fieldHeight  = canvasHeight;
-    
-    context.moveTo(xOffset, 0);
-    context.lineTo(xOffset, fieldHeight);
-    context.strokeStyle = "#666";
-    context.stroke()
-    
-    context.font = "14pt Dekar"
-    
-    context.fillStyle = "#f1f1f1"
-    
-    $.each(keys, function(i){
-        context.fillText(keys[i], 0, (i+1)*40)        
-    })
-    
-    var socket = new io.Socket(); 
-    socket.connect();
-        
-    socket.on('message', function(data){
-        var total = 0
-        var barOffset = 0 
-        var barHeight
-        
-        for (key in data){
-            total += data[key].score
-        }   
-        
-        context.clearRect(xOffset + 1, 0, (canvasWidth - xOffset - 1), canvasHeight)
-        
-        for (key in data){
-            console.log(data[key].score)
-            // barHeight = (data[key].score * (canvasWidth - xOffset) / (total / 2))
-            barHeight = data[key].score * 20
-            context.fillStyle = "rgba(170, 15, 23, 1)"
-            context.fillRect(xOffset + 1, barOffset, barHeight , barWidth -40)
-            barOffset += barWidth
-        }
-    })        
+    for (key in data){
+        console.log(data[key].score)
+        // barHeight = (data[key].score * (canvasWidth - xOffset) / (total / 2))
+        // barHeight = data[key].score * 20
+        // context.fillStyle = "rgba(170, 15, 23, 1)"
+        // context.fillRect(xOffset + 1, barOffset, barHeight , barWidth -40)
+        // barOffset += barWidth
+    }
   })

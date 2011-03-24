@@ -28,6 +28,19 @@ h1 span {
     color: #444;
 }
 
-#canvas {
-    margin: auto;
+#chart {
+    margin-top:20px;
+    width:1000px;
+    height:400px;    
+}
+
+#chart #labels, #chart #field {
+  float: left;
+  height: 100%;
+  width: 900px;
+}
+
+#chart #labels {
+  border-right:1px solid #666;
+  width: 99px;
 }
