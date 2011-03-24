@@ -10,8 +10,6 @@ var twitter     = require('twitter'),
     config      = require('./config').Config
 
 
-// Call start methods only once
-
 twitter.start(filters.KEYWORDS, function(tweet){
     var tally = processor.process(filters.MAP, tweet.text);
     database.persist(tweet, tally);
