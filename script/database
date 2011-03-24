@@ -5,23 +5,30 @@ var database = require('database');
 
 if (process.argv[2] == 'clear') {
   database.Tweet.remove({}, function(error){
+    exitCode = 0
     if (error){
       console.log("There was an error clearing the database:")
       console.log(error)
+      exitCode = 1
     } else {
       console.log("Database cleared")
     }
-    process.exit()
+    process.exit(exitCode)
   })
   
 } else if (process.argv[2] == 'clear_mocks') {
   database.destroy_mocks(function(error){
+    exitCode = 0
     if (error){
       console.log("There was an error clearing the mocks:")
       console.log(error)
+      exitCode = 1
     } else {
       console.log("Mocks cleared")
     }
-    process.exit()
+    process.exit(exitCode)
   })
+} else {
+  console.log("Unrecognized argument: " + process.argv[2])
+  process.exit(1)
 }
