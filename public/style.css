@@ -44,3 +44,9 @@ h1 span {
   border-right:1px solid #666;
   width: 99px;
 }
+
+.bar {
+  height:70%;
+  background-color:red;
+  width:0px;
+}
