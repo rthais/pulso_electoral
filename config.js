@@ -2,7 +2,7 @@ var config = {
     calculationInterval: 500,
     mock: {
       enabled: false,
-      interval: 200,
+      interval: 800,
       weight: 0.4
     }
 }

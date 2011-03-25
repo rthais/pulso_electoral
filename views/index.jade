@@ -1,9 +1,16 @@
 h1 Pulso Electoral
   span \ Elecciones 2011
   
-#chart
-  #labels
-  #field
+h2 Los tweets de cada candidato en tiempo real
+
+#inner_contents
+  
+  #chart
+    #labels
+    #field
+
+  #tweets
+
 
 script(src='/socket.io/socket.io.js')
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
@@ -22,6 +29,7 @@ script
     var keys = !{JSON.stringify(keys)}  
     
     var field = $("#field")
+    var tweets = $("#tweets")
   
     var fieldHeight = field.height();
     var fieldWidth  = field.width();    
@@ -50,15 +58,23 @@ script
     
     var handleTweet = function(data){
       var tally_length = data.tally.length
+      
       for (i=0; i < tally_length; i++){
-        var bar = bars[data.tally[0]]
-        var needle = bar.find(".needle")
-        needle.stop()
-        var jumpSize = Math.min(100, bar.width() - (needle.position().left + needleWidth))
+        var bar = bars[data.tally[0]];
+        var needle = bar.find(".needle");
+        needle.stop();
+        var jumpSize = Math.min(100, bar.width() - (needle.position().left + needleWidth));
         needle.animate({ left: "+="+jumpSize+"px" }, 400, 'jump', function(){          
-          needle.animate({ left: "0px"}, 8000 )
+          needle.animate({ left: "0px"}, 8000 );
         })
       }
+      
+      var tweet = $("<div/>")
+        .addClass("tweet")
+        .text(data.tweet);
+      
+      tweets.prepend(tweet);
+      tweet.fadeIn();      
     }
     
     var handleStats = function(data){
