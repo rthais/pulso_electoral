@@ -13,7 +13,10 @@ var twitter     = require('twitter'),
 twitter.start(filters.KEYWORDS, function(tweet){
     var tally = processor.process(filters.MAP, tweet.text);
     database.persist(tweet, tally);
-    //server.broadcast(tally);
+    server.broadcast({
+      tally: tally,
+      tweet: tweet.text
+    });
 });
 
 // Calculate and broadcast updates 

@@ -1,8 +1,8 @@
 var config = {
     calculationInterval: 500,
     mock: {
-      enabled: true,
-      interval: 100,
+      enabled: false,
+      interval: 200,
       weight: 0.4
     }
 }

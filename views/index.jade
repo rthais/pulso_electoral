@@ -12,6 +12,12 @@ script
   var socket = new io.Socket(); 
   socket.connect();  
   
+  jQuery.extend(jQuery.easing, {
+    jump: function (x, t, b, c, d){
+      return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
+    }
+  })
+  
   $(document).ready(function(){
     var keys = !{JSON.stringify(keys)}  
     
@@ -19,29 +25,56 @@ script
   
     var fieldHeight = field.height();
     var fieldWidth  = field.width();    
-    var barWidth     = fieldHeight / keys.length;
+    var barContainerHeight  = fieldHeight / keys.length;
     
     var bars = {}
+    var keys_length = keys.length
     
-    for (i=0; i < keys.length; i++){
-      bars[keys[i]] = $("<div/>").addClass("bar")          
+    for (i=0; i < keys_length ; i++){
+      var bar = bars[keys[i]] = $("<div/>")
+        .addClass("bar")          
+        .append($("<div/>").addClass('needle'))
+                
       $("<div/>")
         .addClass('bar_container')
-        .height(barWidth)
+        .height(barContainerHeight)
         .appendTo(field)
-        .append(bars[keys[i]])          
+        .append(bar)   
     }
-        
-    socket.on('message', function(data){
+    
+    ($(".bar_container:not(:first-child) > .bar")).css(
+      { 'margin-top': ((barContainerHeight * 0.3) / 3) + "px" }
+    )
+    
+    var needleWidth = $(".needle").width()
+    
+    var handleTweet = function(data){
+      var tally_length = data.tally.length
+      for (i=0; i < tally_length; i++){
+        var bar = bars[data.tally[0]]
+        var needle = bar.find(".needle")
+        needle.stop()
+        var jumpSize = Math.min(100, bar.width() - (needle.position().left + needleWidth))
+        needle.animate({ left: "+="+jumpSize+"px" }, 400, 'jump', function(){          
+          needle.animate({ left: "0px"}, 8000 )
+        })
+      }
+    }
+    
+    var handleStats = function(data){
       for (key in data){
-          console.log(data[key].score)
           bars[key].animate({ width: (data[key].score) + "px" })
           // barHeight = (data[key].score * (canvasWidth - xOffset) / (total / 2))
           // barHeight = data[key].score * 20
-          // context.fillStyle = "rgba(170, 15, 23, 1)"
-          // context.fillRect(xOffset + 1, barOffset, barHeight , barWidth -40)
-          // barOffset += barWidth
       }
+    }
+            
+    socket.on('message', function(data){
+      if (data.tweet){
+        handleTweet(data)
+      } else {
+        handleStats(data)
+      }  
     })
   
   })

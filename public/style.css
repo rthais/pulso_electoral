@@ -47,6 +47,16 @@ h1 span {
 
 .bar {
   height:70%;
-  background-color:red;
+  background-color:rgba(170, 15, 23, 0.75);
   width:0px;
+  position:relative;
+  overflow:hidden;
 }
+
+.needle {
+  height:100%;
+  width:2px;
+  background-color:white;
+  position:absolute;
+  left:0;
+}  
