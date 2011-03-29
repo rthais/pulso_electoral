@@ -4,8 +4,29 @@
   left: 0;
   z-index: 100;
   text-align: left;
+  color: #000;
+  font-family:arial, sans-serif;
+  font-size: 13px;
 }
 
+#facebox .content h2, #facebox .content h3 {
+  font-family:arial, sans-serif;
+  letter-spacing: -1px;
+}
+
+#facebox .content h2 {
+  font-size:18pt;
+}
+
+#facebox .content h3 {
+  font-size:14pt;
+}
+
+#facebox a {
+  color: #2200C1;
+  font-weight:normal;
+  text-decoration:underline;
+}
 
 #facebox .popup{
   position:relative;
@@ -20,7 +41,7 @@
 
 #facebox .content {
   display:table;
-  width: 370px;
+  width: 640px;
   padding: 10px;
   background: #fff;
   -webkit-border-radius:4px;

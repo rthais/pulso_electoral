@@ -104,10 +104,14 @@ h1 span {
   padding-top: 0px;
 }
 
-.tweet a {
+a {
   font-weight: bold;
   color: #f6f6f6;
   text-decoration: none;
+}
+
+a:hover{
+  text-decoration: underline;
 }
 
 .social {
@@ -123,12 +127,20 @@ h1 span {
 #footer {
   clear:both;
   margin: auto;
-  margin-top:60px;
+  margin-top:50px;
   width:600px;
   text-align:center;
   font-family:"lucida grande",lucida,tahoma,helvetica,arial,sans-serif;
   font-size: 10px;
 }
+
+a#info{
+  display:block;
+  width:30px;
+  margin:auto;
+  margin-bottom: 10px;
+}
+
 
 /* float clearing for IE6 */
 * html .clearfix{

@@ -1,20 +1,38 @@
 !!! 5
 html
   head
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
     script
       //chartbeat
       var _sf_startpt=(new Date()).getTime()
       
     title Pulso Electoral
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/facebox.css')
     
   body
     #contents
       != body
     
-    #footer Una Produccion de Roberto Thais
-      
+    #footer 
+      a#info(href='#info')
+        img(src='/images/info.png')
+
+      © 2011 Roberto Thais (
+      a(href='http://twitter.com/robertothais', target='_blank') @robertothais
+      )
+    
+    script(src='/script/facebox/facebox.js')    
     script
+      //facebox      
+      $(function(){
+        $.facebox.settings.closeImage = '/images/facebox/closelabel.png'
+        $.facebox.settings.loadingImage = '/images/facebox/loading.gif'
+        $("a#info").click(function(){
+          $.facebox({ 'ajax': '/info' })
+        })
+      })        
+    
       //chartbeat
       var _sf_async_config={uid:21967,domain:"pulsoelectoral.com"};
       (function(){
