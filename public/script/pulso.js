@@ -5,7 +5,7 @@ jQuery.extend(jQuery.easing, {
 })
 
 $(document).ready(function() {
-    var socket = new io.Socket(3001);
+    var socket = new io.Socket();
     socket.connect();
 
     var field = $("#field"),
