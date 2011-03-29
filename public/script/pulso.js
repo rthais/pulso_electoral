@@ -37,7 +37,7 @@ $(document).ready(function() {
         
         $("<div/>")
             .css({
-                "background-image": "url(/"+Pulso.keys[i]+".png)",
+                "background-image": "url(/images/"+Pulso.keys[i]+".png)",
                 "background-repeat": "no-repeat"})
             .addClass("avatar")
             .appendTo(labels)
