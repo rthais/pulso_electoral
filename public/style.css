@@ -28,13 +28,21 @@ h2 {
   font-size: 24pt;
 }
 
+div h1 {
+  float: left;
+}
+
 h1 span {
     color: #444;
 }
 
+#contents{
+  width: 1153px;
+}
+
 #inner_contents {
   margin-top:20px;
-  width:1153px;
+  width:100%px;
 }
 
 #tweets {
@@ -62,6 +70,11 @@ h1 span {
   width: 79px;
 }
 
+.avatar {
+  width:50px;
+  margin-top: 15%;
+}
+
 .bar {
   height:70%;
   background-color:rgba(170, 15, 23, 0.75);
@@ -87,8 +100,34 @@ h1 span {
   color: #666;
 }
 
+.tweet:first-child {
+  padding-top: 0px;
+}
+
+.tweet a {
+  font-weight: bold;
+  color: #f6f6f6;
+  text-decoration: none;
+}
+
+.social {
+  margin-top: 20px;
+  float: right;
+  width: 270px
+}
+
+.twitter-share-button {
+  margin-right: 10px;
+}
+
 #footer {
   clear:both;
+  margin: auto;
+  margin-top:60px;
+  width:600px;
+  text-align:center;
+  font-family:"lucida grande",lucida,tahoma,helvetica,arial,sans-serif;
+  font-size: 10px;
 }
 
 /* float clearing for IE6 */

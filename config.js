@@ -2,9 +2,9 @@ var config = {
     calculationInterval: 500,
     mock: {
       enabled: false,
-      interval: 1000,
-      weight: 0.4
-    }
+      interval: 500,
+      weight: 0.9
+    },
 }
 
 exports.Config = config

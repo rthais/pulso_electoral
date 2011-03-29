@@ -1,7 +1,16 @@
-h1 Pulso Electoral
-  span \ Elecciones 2011
+div.clearfix
+  h1 Pulso Electoral
+    span \ Elecciones 2011
+
+  div.social    
+    <a href="http://twitter.com/share" class="twitter-share-button" data-text="Pulso Electoral: Los tweets electorales en tiempo real." data-count="horizontal" data-via="pulso_electoral" data-related="robertothais:El autor de Pulso Electoral" data-lang="es">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    
+    <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fpulsoelectoral.com&amp;layout=button_count&amp;show_faces=false&amp;width=50&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21&amp;locale=es_PE" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+    
+
+h2 Los tweets electorales en tiempo real
+
   
-h2 Los tweets de cada candidato en tiempo real
 
 #inner_contents.clearfix
   
@@ -12,91 +21,10 @@ h2 Los tweets de cada candidato en tiempo real
   #tweets
 
 
-script(src='/socket.io/socket.io.js')
 script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
-
+script(src='/socket.io/socket.io.js')
+script(src='/pulso.js')
 script
-  var socket = new io.Socket(); 
-  socket.connect();  
-  
-  jQuery.extend(jQuery.easing, {
-    jump: function (x, t, b, c, d){
-      return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
-    }
-  })
-  
-  $(document).ready(function(){
-    var keys = !{JSON.stringify(keys)}  
-    
-    var field = $("#field")
-    var tweets = $("#tweets")
-  
-    var fieldHeight = field.height();
-    var fieldWidth  = field.width();    
-    var barContainerHeight  = fieldHeight / keys.length;
-    
-    var bars = {}
-    var keys_length = keys.length
-    
-    for (i=0; i < keys_length ; i++){
-      var bar = bars[keys[i]] = $("<div/>")
-        .addClass("bar")          
-        .append($("<div/>").addClass('needle'))
-                
-      $("<div/>")
-        .addClass('bar_container')
-        .height(barContainerHeight)
-        .appendTo(field)
-        .append(bar)   
-    }
-    
-    ($(".bar_container:not(:first-child) > .bar")).css(
-      { 'margin-top': ((barContainerHeight * 0.3) / 3) + "px" }
-    )
-    
-    var needleWidth = $(".needle").width()
-    var tweetQueue = []
-    
-    var handleTweet = function(data){
-      var tally_length = data.tally.length
-      
-      for (i=0; i < tally_length; i++){
-        var bar = bars[data.tally[0]];
-        var needle = bar.find(".needle");
-        needle.stop();
-        var jumpSize = Math.min(100, bar.width() - (needle.position().left + needleWidth));
-        needle.animate({ left: "+="+jumpSize+"px" }, 400, 'jump', function(){          
-          needle.animate({ left: "0px"}, 8000 );
-        })
-      }
-      
-      var tweet = $("<div/>")
-        .addClass("tweet")
-        .text(data.tweet);
-      
-      tweets.prepend(tweet);
-      tweet.animate({ opacity: 'toggle', height: 'toggle' }, 'slow');
-      
-      tweetQueue.unshift(tweet);
-
-      if (tweetQueue.length > 20) tweetQueue.pop().remove()
-    }
-    
-    var handleStats = function(data){
-      for (key in data){
-          bars[key].animate({ width: (data[key].score) + "px" })
-          // barHeight = (data[key].score * (canvasWidth - xOffset) / (total / 2))
-          // barHeight = data[key].score * 20
-      }
-    }
-            
-    socket.on('message', function(data){
-      if (data.tweet){
-        handleTweet(data)
-      } else {
-        handleStats(data)
-      }  
-    })
-  
-  })
+  var Pulso = {}
+  Pulso.keys = !{JSON.stringify(keys)}
   

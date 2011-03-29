@@ -15,7 +15,8 @@ twitter.start(filters.KEYWORDS, function(tweet){
     database.persist(tweet, tally);
     server.broadcast({
       tally: tally,
-      tweet: tweet.text
+      tweet: tweet.text,
+      user:  tweet.user.screen_name
     });
 });
 
