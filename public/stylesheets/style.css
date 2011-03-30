@@ -75,6 +75,8 @@ h1 span {
   margin-top: 15%;
 }
 
+a img {border:none; }
+
 .bar {
   height:70%;
   background-color:rgba(170, 15, 23, 0.75);

@@ -17,7 +17,9 @@ $(document).ready(function() {
         fieldScalesLength = fieldScales.length
         barContainerHeight = fieldHeight / Pulso.keys.length;
         
-    var reconnectInterval = null
+    var reconnectInterval = null,
+        activeSocket
+    
         
     var bars = {},
         keys_length = Pulso.keys.length;    
@@ -109,11 +111,19 @@ $(document).ready(function() {
     }
     
     var socketConnect = function(){
+      
+      if (activeSocket) activeSocket.disconnect()
+      
       var socket = new io.Socket(null, {rememberTransport: false});
       socket.connect();
       
+      activeSocket = socket
+      
       socket.on('connect', function(){
-          if (reconnectInterval) clearInterval(reconnectInterval);
+          if (reconnectInterval) {
+            clearInterval(reconnectInterval);
+            reconnectInterval = null
+          }
       })
 
       socket.on('message', function(data) {
@@ -126,9 +136,11 @@ $(document).ready(function() {
 
       //not needed after socket.io v 0.7
       socket.on('disconnect', function(){
-          reconnectInterval = setInterval(function(){
-              socketConnect()
-          }, 5000)
+          if (!reconnectInterval){
+            reconnectInterval = setInterval(function(){
+                socketConnect()
+            }, 5000)
+          }          
       })      
     }
     
