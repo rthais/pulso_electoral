@@ -5,6 +5,9 @@ jQuery.extend(jQuery.easing, {
 })
 
 $(document).ready(function() {
+    
+    
+    
     var socket = new io.Socket();
     socket.connect();
 
@@ -19,7 +22,8 @@ $(document).ready(function() {
         fieldScalesLength = fieldScales.length
         barContainerHeight = fieldHeight / Pulso.keys.length;
         
-
+    var reconnectAttempts = 0
+        
     var bars = {},
         keys_length = Pulso.keys.length;
     
@@ -104,6 +108,10 @@ $(document).ready(function() {
             bars[key].animate({width: (normalizedScores[key] * scaleMultiplier) + "px"}) 
         }
     }
+    
+    socket.on('connect', function(){
+        reconnectAttempts = 0
+    })
 
     socket.on('message', function(data) {
         if (data.tweet) {
@@ -112,4 +120,13 @@ $(document).ready(function() {
             handleStats(data)
         }
     })
+    
+    //not needed after socket.io v 0.7
+    socket.on('disconnect', function(){
+        reconnectAttempts += 1
+        setTimeout(function(){
+            socket.connect()
+        }, 500 * Math.pow(2, reconnectAttempts))
+    })
+    
 })
