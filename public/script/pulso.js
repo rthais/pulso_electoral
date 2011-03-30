@@ -52,7 +52,6 @@ $(document).ready(function() {
         tweetQueue = [];
 
     var handleTweet = function(data) {
-        console.log(data)
         var tally_length = data.tally.length;
 
         for (i = 0; i < tally_length; i++) {
