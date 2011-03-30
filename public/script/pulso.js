@@ -6,10 +6,6 @@ jQuery.extend(jQuery.easing, {
 
 $(document).ready(function() {
     
-    var socket = new io.Socket(null, {rememberTransport: false});
-    socket_transports = socket.options.transports.slice()
-    socket.connect();
-
     var field = $("#field"),
         tweets = $("#tweets"),
         labels = $("#labels");
@@ -108,32 +104,29 @@ $(document).ready(function() {
         }
     }
     
-    socket.on('connect', function(){
-        reconnectAttempts = 0
-        if (reconnectInterval) clearInterval(reconnectInterval);
-    })
+    var socketConnect = function(){
+      var socket = new io.Socket();
+      socket.connect();
+      
+      socket.on('connect', function(){
+          if (reconnectInterval) clearInterval(reconnectInterval);
+      })
 
-    socket.on('message', function(data) {
-        if (data.tweet) {
-            handleTweet(data)
-        } else {
-            handleStats(data)
-        }
-    })
+      socket.on('message', function(data) {
+          if (data.tweet) {
+              handleTweet(data)
+          } else {
+              handleStats(data)
+          }
+      })
+
+      //not needed after socket.io v 0.7
+      socket.on('disconnect', function(){
+          reconnectInterval = setInterval(function(){
+              socketConnect()
+          }, 5000)
+      })      
+    }
     
-    socket.on('connecting', function(type) {
-        console.log(type)
-    })
-    
-    //not needed after socket.io v 0.7
-    socket.on('disconnect', function(){
-        reconnectInterval = setInterval(function(){
-            //reset available transports
-            socket._remainingTransports = socket_transports.slice()
-            console.log(socket)
-            socket.connect()
-        }, 2000)
-        reconnectAttempts += 1
-    })
-    
+    socketConnect();
 })
