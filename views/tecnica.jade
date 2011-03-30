@@ -1,0 +1,45 @@
+h2 Información Técnica
+
+p En cada instante, cada tweet recibido por el sistema tiene un valor inversamente proporcional a la cantidad de tiempo transcurrido desde que el tweet fue publicado. La razón de disminución es proporcional al valor actual del tweet. En otras palabras, el valor del tweet decae exponencialmente.
+
+p El valor <em>N</em> del tweet se relaciona con el tiempo de la siguiente manera:
+
+p
+  img(src='/images/exponential.png')
+
+p <em>t</em> representa la el tiempo transcurrido desde la publicación del tweet, &#955; es la constante de decaimiento y <em>N<sub>0</sub></em> es la solución cuando <em>t</em> es igual a 0. Hemos escogido <em>N<sub>0</sub></em> igual a 1 y &#955 de tal manera que los tweets tienen una vida media de dos horas. 
+
+p Esto quiere decir que apenas se registra el tweet su valor es de 1. Luego de dos horas, 0.5 y así consecutivamente.
+
+p El sistema calcula varias veces cada segundo el valor cumulativo de todos los tweets a través de una rutina de 
+  a(href='http://es.wikipedia.org/wiki/MapReduce', target="_blank") map/reduce
+  \. Luego los resultados son difundidos a cada cliente conectado al servidor. Estos a su vez se encargan de re-dibujar el gráfico con la nueva información.
+  
+h3 Tecnologías
+
+p Pulso Electoral esta escrito enteramente en javascript y utiliza 
+  a(href='http://nodejs.org/', target="_blank") node.js
+  \ y 
+  a(href='http://socket.io/', target="_blank") socket.io
+  \ para manejar las conecciones asincrónicas entre los clientes y el servidor. Se utiliza 
+  a(href='http://www.mongodb.org/') MongoDB
+  \ como herramienta de persistencia y 
+  a(href='http://blog.learnboost.com/blog/mongoose/', target="_blank") Mongoose
+  \ para acceder a ella desde Node.
+  
+p Los tweets vienen del 
+  a(href="http://dev.twitter.com/pages/streaming_api", target="_blank") Streaming API
+  \ de Twitter a través de la interface que provee
+  a(href="https://github.com/technoweenie/twitter-node", target="_blank") twitter-node
+  \.
+
+p 
+  a(href="http://expressjs.com/", target="_blank") Express
+  \ y 
+  a(href="http://jade-lang.com/", target="_blank") Jade
+  \ facilitan las respuestas a solicitudes html y  
+  a(href="http://jquery.com/", targe="_blank") jQuery 
+  \ la manipulación del DOM en el cliente.
+  
+  
+  

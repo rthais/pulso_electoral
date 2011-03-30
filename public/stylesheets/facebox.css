@@ -28,6 +28,10 @@
   text-decoration:underline;
 }
 
+em {
+  font-style: italic;
+}
+
 #facebox .popup{
   position:relative;
   border:3px solid rgba(0,0,0,0);
