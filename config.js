@@ -4,7 +4,7 @@ var environment = process.env.NODE_ENV || 'development'
 var config = {
     calculationInterval: 500,
     mock: {
-      enabled: true,
+      enabled: false,
       interval: 1000,
       weight: 0.9
     },
