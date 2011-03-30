@@ -53,15 +53,15 @@ $(document).ready(function() {
         var tally_length = data.tally.length;
 
         for (i = 0; i < tally_length; i++) {
-            var bar = bars[data.tally[0]],
+            var bar = bars[data.tally[i]],
                 needle = bar.find(".needle");
-                
+                        
             needle.stop();
             
             var jumpSize = Math.min(100, bar.width() - (needle.position().left + needleWidth));
-            
+
             needle.animate({left: "+=" + jumpSize + "px"}, 400, 'jump', function() {
-                needle.animate({left: "0px"}, 8000);
+              $(this).animate({left: "0px"}, 8000);
             })
         }
 
@@ -104,7 +104,7 @@ $(document).ready(function() {
     }
     
     var socketConnect = function(){
-      var socket = new io.Socket();
+      var socket = new io.Socket(null, {rememberTransport: false});
       socket.connect();
       
       socket.on('connect', function(){
