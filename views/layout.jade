@@ -29,6 +29,9 @@ html
         $("a#info").click(function(){
           $.facebox({ 'ajax': '/info' })
         })
+        $(document).bind('close.facebox', function(){
+          window.location.hash = "";
+        })
       })        
     
       //chartbeat

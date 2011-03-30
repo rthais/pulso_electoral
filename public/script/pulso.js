@@ -20,8 +20,7 @@ $(document).ready(function() {
     var reconnectInterval = null
         
     var bars = {},
-        keys_length = Pulso.keys.length;
-    
+        keys_length = Pulso.keys.length;    
 
     for (i = 0; i < keys_length; i++) {
         var bar = bars[Pulso.keys[i]] = $("<div/>")
