@@ -48,6 +48,11 @@ $(document).ready(function() {
 
     var needleWidth = $(".needle").width(),
         tweetQueue = [];
+        
+    //fix for ie's lack of rgba support
+    if ($.browser.msie){
+      $(".bar").css({'background-color': 'rgb(170, 15, 23)'})
+    }
 
     var handleTweet = function(data) {
         var tally_length = data.tally.length;
