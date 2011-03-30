@@ -6,9 +6,8 @@ jQuery.extend(jQuery.easing, {
 
 $(document).ready(function() {
     
-    
-    
-    var socket = new io.Socket();
+    var socket = new io.Socket(null, {rememberTransport: false});
+    socket_transports = socket.options.transports.slice()
     socket.connect();
 
     var field = $("#field"),
@@ -22,7 +21,7 @@ $(document).ready(function() {
         fieldScalesLength = fieldScales.length
         barContainerHeight = fieldHeight / Pulso.keys.length;
         
-    var reconnectAttempts = 0
+    var reconnectInterval = null
         
     var bars = {},
         keys_length = Pulso.keys.length;
@@ -111,6 +110,7 @@ $(document).ready(function() {
     
     socket.on('connect', function(){
         reconnectAttempts = 0
+        if (reconnectInterval) clearInterval(reconnectInterval);
     })
 
     socket.on('message', function(data) {
@@ -121,12 +121,19 @@ $(document).ready(function() {
         }
     })
     
+    socket.on('connecting', function(type) {
+        console.log(type)
+    })
+    
     //not needed after socket.io v 0.7
     socket.on('disconnect', function(){
-        reconnectAttempts += 1
-        setTimeout(function(){
+        reconnectInterval = setInterval(function(){
+            //reset available transports
+            socket._remainingTransports = socket_transports.slice()
+            console.log(socket)
             socket.connect()
-        }, 500 * Math.pow(2, reconnectAttempts))
+        }, 2000)
+        reconnectAttempts += 1
     })
     
 })
