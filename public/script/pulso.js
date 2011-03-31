@@ -12,14 +12,12 @@ $(document).ready(function() {
         
     var fieldHeight = field.height(),
         fieldWidth = field.width(),
-        fieldScales = [ 2/5, 1/2, 3/4, 1 ]
-        fieldThreshold = 0.9
-        fieldScalesLength = fieldScales.length
+        fieldScales = [ 2/5, 1/2, 3/4, 1 ],
+        fieldThreshold = 0.9,
+        fieldScalesLength = fieldScales.length,
         barContainerHeight = fieldHeight / Pulso.keys.length;
         
-    var reconnectInterval = null,
-        activeSocket
-    
+    var reconnectInterval = null;
         
     var bars = {},
         keys_length = Pulso.keys.length;    
@@ -53,7 +51,7 @@ $(document).ready(function() {
         
     //fix for ie's lack of rgba support
     if ($.browser.msie){
-      $(".bar").css({'background-color': 'rgb(170, 15, 23)'})
+      $(".bar").css({'background-color': 'rgb(170, 15, 23)'});
     }
 
     var handleTweet = function(data) {
@@ -110,19 +108,16 @@ $(document).ready(function() {
         }
     }
     
-    var socketConnect = function(){
-      
-      if (activeSocket) activeSocket.disconnect()
-      
-      var socket = new io.Socket(null, {rememberTransport: false});
+    var socketConnect = function(options){
+      options = options || {};
+      $.extend(options, {rememberTransport: false});
+      var socket = new io.Socket(null, options);
       socket.connect();
-      
-      activeSocket = socket
       
       socket.on('connect', function(){
           if (reconnectInterval) {
             clearInterval(reconnectInterval);
-            reconnectInterval = null
+            reconnectInterval = null;
           }
       })
 
@@ -138,7 +133,8 @@ $(document).ready(function() {
       socket.on('disconnect', function(){
           if (!reconnectInterval){
             reconnectInterval = setInterval(function(){
-                socketConnect()
+                console.log("tryin to reconnect")
+                socketConnect({connectTimeout: false})
             }, 5000)
           }          
       })      
