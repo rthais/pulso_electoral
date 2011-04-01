@@ -24,4 +24,10 @@ twitter.start(filters.KEYWORDS, function(tweet){
 // Wait +calculationInterval+ milliseconds between calculations
 calculation.start(server.broadcast, config.calculationInterval)
 
-server.start();
+server.start(function(){
+    server.socket.on('connection', function(client){
+        calculation.last(function(result){
+            client.send(result)
+        })
+    })
+});
