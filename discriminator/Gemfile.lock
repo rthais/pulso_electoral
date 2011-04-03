@@ -1,0 +1,14 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    daemons (1.1.2)
+    eventmachine (0.12.10)
+    whatlanguage (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  daemons
+  eventmachine
+  whatlanguage

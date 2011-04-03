@@ -3,11 +3,17 @@ var environment = process.env.NODE_ENV || 'development'
 
 var config = {
     calculationInterval: 500,
+    
     mock: {
       enabled: false,
-      interval: 300,
-      weight: 0.8
+      interval: 100,
+      weight: 0
     },
+    
+    discriminator: {
+        host: 'localhost',
+        port: 20100
+    }
 }
 
 // Synchronous, since we only do it once

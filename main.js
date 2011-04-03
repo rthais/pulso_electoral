@@ -1,9 +1,9 @@
 require.paths.unshift(__dirname + '/lib');
 
 var twitter     = require('twitter'),
-    filters     = require('filters'),
     processor   = require('processor'),
     database    = require('database'),
+    filters = require('filters');
     server      = require('server')
     calculation = require('calculation')
     
@@ -11,12 +11,13 @@ var twitter     = require('twitter'),
 
 
 twitter.start(filters.KEYWORDS, function(tweet){
-    var tally = processor.process(filters.MAP, tweet.text);
-    database.persist(tweet, tally);
-    server.broadcast({
-      tally: tally,
-      tweet: tweet.text,
-      user:  tweet.user.screen_name
+    var tally = processor.process(tweet.text, function(tally){
+        database.persist(tweet, tally);
+        server.broadcast({
+          tally: tally,
+          tweet: tweet.text,
+          user:  tweet.user.screen_name
+        });
     });
 });
 
