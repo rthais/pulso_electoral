@@ -1,0 +1,13 @@
+{
+  "name": "pulso-electoral",
+  "description": "Pulso Electoral"
+  "version": "1.0.0",
+
+  "dependencies": {
+    "socket.io": "0.6.5",
+     "jade": "0.13.0",
+    "express": "2.4.x",
+    "mongoose": "1.5.x",
+    "twitter-node": "0.0.2"
+  }
+}
