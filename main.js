@@ -25,6 +25,13 @@ twitter.start(filters.KEYWORDS, function(tweet){
 // Wait +calculationInterval+ milliseconds between calculations
 calculation.start(server.broadcast, config.calculationInterval)
 
+// Catch uncaught exceptions
+process.addListener("uncaughtException", function (err) {
+    console.error("Uncaught Exception: " + err);
+    console.error(err.stack);
+});
+
+
 server.start(function(){
     server.socket.on('connection', function(client){
         calculation.last(function(result){

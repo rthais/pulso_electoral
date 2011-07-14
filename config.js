@@ -16,8 +16,11 @@ var config = {
     }
 }
 
-// Synchronous, since we only do it once
-var credentials = JSON.parse(fs.readFileSync(__dirname + '/credentials', 'utf8'))[environment]
-config.credentials = credentials
+config.credentials = {
+  twitter: {
+    user: process.env.TWITTER_USER,
+    password: process.env.TWITTER_PASSWORD
+  }
+}
 
 exports.Config = config
