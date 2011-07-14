@@ -1,6 +1,6 @@
 {
   "name": "pulso-electoral",
-  "description": "Pulso Electoral"
+  "description": "Pulso Electoral",
   "version": "1.0.0",
 
   "dependencies": {
